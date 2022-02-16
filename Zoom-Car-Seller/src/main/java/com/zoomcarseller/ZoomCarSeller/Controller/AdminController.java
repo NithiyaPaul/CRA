@@ -3,10 +3,12 @@ package com.zoomcarseller.ZoomCarSeller.Controller;
 import com.zoomcarseller.ZoomCarSeller.Entity.Owner;
 import com.zoomcarseller.ZoomCarSeller.Entity.User;
 import com.zoomcarseller.ZoomCarSeller.Service.*;
+import com.zoomcarseller.ZoomCarSeller.ValueObject.BookCar;
 import com.zoomcarseller.ZoomCarSeller.ValueObject.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -99,9 +101,18 @@ public class AdminController {
         return "LoginPage";
     }
 
-    @PostMapping("/update-booking-status/{id}")
-    public String updateBookingStatus(@PathVariable Long id){
-        bookCarService.getBookingById(id);
-        return "AdminSearchHistroyPage";
+    @RequestMapping("/update-booking-status/{id}")
+    public String updateBookingStatus(@PathVariable Long id,Model model,HttpServletRequest request) {
+        BookCar bookCar = bookCarService.getBookingById(id);
+        model.addAttribute("status",bookCarService.getBookingById(id));
+        return "AdminUpdateStatusPage";
+    }
+
+    @PostMapping("/update-booking-status")
+    public String updateBookingStatus(HttpServletRequest request){
+        BookCar bookCar = new BookCar();
+        bookCar.setStatus(Integer.parseInt(request.getParameter("bookingStatus")));
+        bookCarService.saveStatus(bookCar,Long.parseLong(request.getParameter("bookingId")));
+        return "redirect:/booking-history";
     }
 }

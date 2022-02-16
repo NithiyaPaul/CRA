@@ -68,7 +68,9 @@ public class AuthController {
     public String getProfile(HttpServletRequest request,Model model){
         HttpSession session = request.getSession();
         Long ownerId = Long.parseLong((String) session.getAttribute("ownerId"));
+        String userName = (String) session.getAttribute("businessName");
         model.addAttribute("profile",ownerService.findOwnerById(ownerId));
+        model.addAttribute("userName",userName);
         return "ProfilePage";
     }
 

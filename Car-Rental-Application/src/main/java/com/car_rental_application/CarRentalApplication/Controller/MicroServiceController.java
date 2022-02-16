@@ -1,9 +1,11 @@
 package com.car_rental_application.CarRentalApplication.Controller;
 
 import com.car_rental_application.CarRentalApplication.Entity.BookCar;
+import com.car_rental_application.CarRentalApplication.Entity.Car;
 import com.car_rental_application.CarRentalApplication.Entity.User;
 import com.car_rental_application.CarRentalApplication.Service.AuthService;
 import com.car_rental_application.CarRentalApplication.Service.BookCarService;
+import com.car_rental_application.CarRentalApplication.Service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,8 @@ public class MicroServiceController {
     BookCarService bookCarService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private CarService carService;
 
     @GetMapping("/get-all-booking/{ownerId}")
     public List getAllBookingByOwnerId(@PathVariable Long ownerId){
@@ -56,5 +60,17 @@ public class MicroServiceController {
     @GetMapping("/get-booking/{id}")
     public BookCar getBookingById(@PathVariable Long id){
         return bookCarService.findBookingById(id);
+    }
+
+    @PostMapping("/save-status/{id}")
+    public BookCar saveStatus(@PathVariable Long id,@RequestBody BookCar bookCar){
+        BookCar bookCar1 = bookCarService.findBookingById(id);
+        bookCar1.setStatus(bookCar.getStatus());
+        if(bookCar.getStatus() == 1 || bookCar.getStatus() ==4){
+            Car car = carService.findCarById(bookCar1.getCar().getId());
+            car.setActive_state(false);
+            carService.updateState(car);
+        }
+        return bookCarService.saveBookingDetails(bookCar1);
     }
 }

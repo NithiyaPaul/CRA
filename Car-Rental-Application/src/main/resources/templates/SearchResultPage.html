@@ -18,12 +18,13 @@
 
 
 
+
     </style>
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#314800">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index">
+        <a class="navbar-brand" href="../index">
             <img th:src="@{/zoom-logo.png}" alt="" width="180"
                  height="50" class="d-inline-block align-text-top">
         </a>
@@ -34,7 +35,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-versions">
                 <li><a class="dropdown-item" href="/my-booking">My Booking</a></li>
-                <li><a class="dropdown-item" href="logout">Logout</a></li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -44,20 +45,19 @@
         <div class="container p-5" style="background-color:#87c700; height:300px">
             <div class="text-white mt-5">
                 <h5 class="fw-bold mb-3">Search Details</h5>
-                <p class="mb-2">Location : Kochi</p>
-                <p>2022-01-12 - 2022-01-13</p>
+                <p class="mb-2">Location : <span th:text="${searchDetails.getLocation}"></span></p>
+                <p><spn th:text="${searchDetails.getStart_date}"></spn> - <span th:text="${searchDetails.getEnd_date}"></span></p>
             </div>
         </div>
     </div>
     <div class="col-9 p-4">
         <div class="container p-2 mt-3 shadow mb-2 bg-body rounded" th:each="carList : ${carList}">
-<!--            <span th:text="${carList}"></span>-->
             <div class="row">
                 <div class="col-2">
                     <img th:src="@{/car-logo.png}" width="120px">
                 </div>
                 <div class="col-8">
-                    <p class="fw-bold"><span th:text="${carList.car_number}"></span></p>
+                    <p><span class="fw-bold" th:text="${carList.car_number}"></span> - <span th:text="${carList.owner.contact_name}"></span></p>
                     <p><span th:text="${carList.brand}"></span> - <span th:text="${carList.modal}"></span></p>
                     <p><span th:text="${carList.no_of_seats}"></span> seater / <span th:text="${carList.type}"></span>
                     </p>
@@ -69,7 +69,8 @@
                             <input type="text" class="form-control" id="carId" name="carId" th:value="${carList.id}">
                             <input type="text" class="form-control" id="carRate" name="carRate"
                                    th:value="${carList.rate}">
-                            <input type="text" class="form-control" id="ownerId" name="ownerId" th:value="${carList.owner.id}">
+                            <input type="text" class="form-control" id="ownerId" name="ownerId"
+                                   th:value="${carList.owner.id}">
                         </div>
                         <button type="submit" class="btn text-white" style="background-color:#87c700;">Book Now</button>
                     </form>

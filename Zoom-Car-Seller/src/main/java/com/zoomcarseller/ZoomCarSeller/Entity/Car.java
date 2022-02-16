@@ -28,5 +28,5 @@ public class Car {
     private String location;
     @OneToOne
     private Owner owner;
-    private boolean active_state;
+    private Boolean active_state;
 }

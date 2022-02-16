@@ -50,71 +50,47 @@
                 </h4>
             </div>
         </div>
-        <table class="table table-striped table-hover">
-            <tbody>
-            <tr th:each="booking : ${booking}">
-                <td><span th:text="${booking.user.name}"></span></td>
-                <td><span th:text="${booking.searchCar.location}"></span></td>
-                <td><span th:text="${booking.car.car_number}"></span></td>
-                <td th:if="${booking.status == 2}">Booked</td>
-                <td th:if="${booking.status == 3}">On Ride</td>
-                <td th:if="${booking.status == 4}">Return</td>
-                <td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">View</a></td>
-                <td><a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#createModal">Update Status</a></td>
-
-
-<!--                &lt;!&ndash; View Modal &ndash;&gt;-->
-<!--                <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel"-->
-<!--                     aria-hidden="true">-->
-<!--                    <div class="modal-dialog modal-dialog-centered modal-lg">-->
-<!--                        <div class="modal-content">-->
-<!--                            <div class="modal-body">-->
-<!--                                <div class="container p-4">-->
-<!--                                    <div class="row mt-4">-->
-<!--                                        <div class="col-6">-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label for="car_number" class="form-label">Car Number</label>-->
-<!--                                                <input type="text" class="form-control" id="car_number" name="car_number"-->
-<!--                                                       th:value="${car.car_number}">-->
-<!--                                            </div>-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label for="no_of_seats" class="form-label">No of Seats</label>-->
-<!--                                                <input type="number" class="form-control" id="no_of_seats" name="no_of_seats"-->
-<!--                                                       th:value="${car.no_of_seats}">-->
-<!--                                            </div>-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label class="form-label">Type</label>-->
-<!--                                                <input type="text" class="form-control" id="fuelType" name="fuelType"-->
-<!--                                                       th:value="${car.type}">-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="col-6">-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label for="modal" class="form-label">Modal</label>-->
-<!--                                                <input type="text" class="form-control" id="modal" name="modal"-->
-<!--                                                       th:value="${car.modal}">-->
-<!--                                            </div>-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label for="company" class="form-label">Company</label>-->
-<!--                                                <input type="text" class="form-control" id="company" name="company"-->
-<!--                                                       th:value="${car.brand}">-->
-<!--                                            </div>-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label for="location" class="form-label">Location</label>-->
-<!--                                                <input type="text" class="form-control" id="location" name="location"-->
-<!--                                                       th:value="${car.location}">-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-            </tr>
-            </tbody>
-        </table>
+        <div class="accordion mb-2" id="accordionPanelsStayOpenExample" th:each="booking: ${booking}">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            th:data-bs-target="'#booking' + ${booking.id}" aria-expanded="false"
+                            th:aria-controls="'booking' + ${booking.id}">
+                        <span class="fw-bold" th:text="${booking.user.name}"></span> / <span class="fw-bold" th:text="${booking.car.car_number}"></span>
+                    </button>
+                </h2>
+                <div th:id="'booking' + ${booking.id}" class="accordion-collapse collapse"
+                     aria-labelledby="panelsStayOpen-headingTwo" >
+                    <div class="accordion-body">
+                        <div class="row">
+                            <div class="col">
+                                <p><span class="fw-bold">User:  </span> <span th:text="${booking.user.name}"></span></p>
+                            </div>
+                            <div class="col">
+                                <p><span class="fw-bold">Search Location:  </span> <span th:text="${booking.searchCar.location}"></span></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p><span class="fw-bold">Car Number:  </span> <span th:text="${booking.car.car_number}"></span></p>
+                            </div>
+                            <div class="col">
+                                <p th:if="${booking.status == 1}"><span class="fw-bold">Status:  </span> <span class="text-warning fw-bold">Pending</span></p>
+                                <p th:if="${booking.status == 2}"><span class="fw-bold">Status:  </span> <span class="text-success fw-bold">Booked</span></p>
+                                <p th:if="${booking.status == 3}"><span class="fw-bold">Status:  </span> <span class="text-primary fw-bold">On Ride</span></p>
+                                <p th:if="${booking.status == 4}"><span class="fw-bold">Status:  </span> <span class="text-danger fw-bold">Return</span></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <td><a th:href="@{/update-booking-status/{id}(id=${booking.id})}" class="btn btn-warning">Update Status</a>
+                                </td>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -123,3 +99,61 @@
 
 </body>
 </html>
+
+<!--<table class="table table-striped table-hover">-->
+<!--    <tbody>-->
+<!--    <tr th:each="booking,status : ${booking}">-->
+<!--        <td><span th:text="${booking.id}"></span></td>-->
+<!--        <td><span th:text="${booking.user.name}"></span></td>-->
+<!--        <td><span th:text="${booking.searchCar.location}"></span></td>-->
+<!--        <td><span th:text="${booking.car.car_number}"></span></td>-->
+<!--        <td th:if="${booking.status == 1}">Pending</td>-->
+<!--        <td th:if="${booking.status == 2}">Booked</td>-->
+<!--        <td th:if="${booking.status == 3}">On Ride</td>-->
+<!--        <td th:if="${booking.status == 4}">Return</td>-->
+<!--        <td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">View</a></td>-->
+<!--        <td><a class="btn btn-warning" data-toggle="modal" th:data-bs-target="|#updateModal${status.index}|">Update Status</a></td>-->
+
+
+<!--        &lt;!&ndash; Update Modal &ndash;&gt;-->
+<!--        <div class="modal" th:id="|#updateModal+${status.index}|" tabindex="-1" aria-labelledby="#updateModalLabel"-->
+<!--             aria-hidden="true">-->
+<!--            <div class="modal-dialog modal-dialog-centered modal-sm">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-body">-->
+<!--                        <div class="container p-4">-->
+<!--                            <p class="text-center fw-bold">Update Status</p>-->
+<!--                            <form action="/update-booking-status" method="post">-->
+<!--                                <div class="mt-4">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col">-->
+<!--                                            <div class="mb-3">-->
+<!--                                                <label class="form-label">Status</label>-->
+<!--                                                <select class="form-select" aria-label="Default select example" name="bookingStatus" id="bookingStatus">-->
+<!--                                                    <option value="1">Pending</option>-->
+<!--                                                    <option value="2">Booked</option>-->
+<!--                                                    <option value="3">On-Ride</option>-->
+<!--                                                    <option value="4">Return</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div hidden>-->
+<!--                                        <input type="text" class="form-control" id="bookingId"-->
+<!--                                               name="bookingId" th:value="${booking.id}">-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-12 mt-4 text-center">-->
+<!--                                        <button type="submit" class="btn btn-primary">Update Status-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->

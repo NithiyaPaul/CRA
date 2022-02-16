@@ -34,4 +34,8 @@ public class CarService {
     public List<Car> listAllCars(){
         return repository.findAll();
     }
+
+    public void deleteCar(Long id){
+        repository.deleteById(id);
+    }
 }

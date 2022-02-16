@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CarRepository extends JpaRepository<Car,Long> {
+public interface CarRepository extends JpaRepository<Car,Long>{
     @Query("SELECT car FROM Car car WHERE car.owner.id = :id")
     List<Car> listAllMyRegisteredCars(@Param("id") Long Id);
 

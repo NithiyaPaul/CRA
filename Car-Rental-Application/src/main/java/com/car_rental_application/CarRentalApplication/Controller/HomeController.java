@@ -28,9 +28,19 @@ public class HomeController {
     private SearchCarService searchCarService;
     @Autowired
     private CarService carService;
+    HttpSession session;
 
     public String index(Model model,HttpServletRequest request){
-        model.addAttribute("isAuthenticated",isAuthenticated);
+        session = request.getSession();
+        if(isAuthenticated == true){
+            System.out.println("exist");
+            isAuthenticated = true;
+            model.addAttribute("isAuthenticated",isAuthenticated);
+        } else{
+            System.out.println("non exist");
+            isAuthenticated = false;
+            model.addAttribute("isAuthenticated",isAuthenticated);
+        }
         model.addAttribute("userName",getSessionUserName(request));
         return "HomePage";
     }
@@ -56,6 +66,7 @@ public class HomeController {
         List carList = getAllCarsByLocation(request.getParameter("location"));
         model.addAttribute("carList",carList);
         model.addAttribute("searchCarId",searchCarService.saveSearch(car).getId());
+        model.addAttribute("searchDetails",searchCarService.saveSearch(car));
         model.addAttribute("userName",getSessionUserName(request));
         return "SearchResultPage";
     }
@@ -65,14 +76,28 @@ public class HomeController {
     }
 
     public String getSessionUserName(HttpServletRequest request){
-        HttpSession session = request.getSession();
+        session = request.getSession();
         String userName = (String) session.getAttribute("userName");
         return userName;
     }
 
     public Long getSessionUserId(HttpServletRequest request){
-        HttpSession session = request.getSession();
+        session = request.getSession();
         Long userId = Long.parseLong((String) session.getAttribute("userId"));
         return userId;
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request,Model model){
+        isAuthenticated = false;
+        model.addAttribute("isAuthenticated",isAuthenticated);
+        return "HomePage";
+
+    }
+
+    @RequestMapping("/index")
+    public String redirectIndex(Model model,HttpServletRequest request){
+        isAuthenticated = true;
+        return index(model,request);
     }
 }

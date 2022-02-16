@@ -33,6 +33,7 @@ public class CarController {
         car.setNo_of_seats(Integer.parseInt(request.getParameter("no_of_seats")));
         car.setType(request.getParameter("fuel_type"));
         car.setLocation(request.getParameter("location"));
+        car.setActive_state(false);
         Long ownerId = Long.parseLong((String) session.getAttribute("ownerId"));
         Owner owner = ownerService.findOwnerById(ownerId);
         car.setOwner(owner);
@@ -93,6 +94,12 @@ public class CarController {
             }
         }
         carService.saveCare(car);
+        return "redirect:/car/";
+    }
+
+    @RequestMapping("delete-car/{id}")
+    public String deleteCar(@PathVariable Long id){
+        carService.deleteCar(id);
         return "redirect:/car/";
     }
 

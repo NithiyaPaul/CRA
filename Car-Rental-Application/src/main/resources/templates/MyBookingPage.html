@@ -14,7 +14,7 @@
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#314800">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index">
+        <a class="navbar-brand" href="../index">
             <img th:src="@{/zoom-logo.png}" alt="" width="180"
                  height="50" class="d-inline-block align-text-top">
         </a>
@@ -25,7 +25,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-versions">
                 <li><a class="dropdown-item" href="/my-booking">My Booking</a></li>
-                <li><a class="dropdown-item" href="logout">Logout</a></li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -44,6 +44,8 @@
                 <th scope="col">Location</th>
                 <th scope="col">Start Date</th>
                 <th scope="col">End Date</th>
+                <th scope="col">Car Number</th>
+                <th scope="col">Car Modal</th>
                 <th scope="col">Status</th>
             </tr>
             </thead>
@@ -52,9 +54,12 @@
                 <td><span class="col-4" th:text="${list.SearchCar.location}"></span></td>
                 <td><span th:text="${list.SearchCar.start_date}"></span></td>
                 <td><span th:text="${list.SearchCar.end_date}"></span></td>
-                <td th:if="${list.status == 2}">Booked</td>
-                <td th:if="${list.status == 3}">On Ride</td>
-                <td th:if="${list.status == 4}">Return</td>
+                <td><span th:text="${list.car.car_number}"></span></td>
+                <td><span th:text="${list.car.Modal}"></span></td>
+                <td th:if="${list.status == 1}" class="text-warning fw-bold">Pending</td>
+                <td th:if="${list.status == 2}" class="text-success fw-bold">Booked</td>
+                <td th:if="${list.status == 3}" class="text-primary fw-bold">On Ride</td>
+                <td th:if="${list.status == 4}" class="text-danger fw-bold">Return</td>
 <!--                <td><a class="btn btn-primary" style="width:100px">View</a></td>-->
             </tr>
             </tbody>

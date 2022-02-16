@@ -13,7 +13,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#314800">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index">
+        <a class="navbar-brand" href="../../../index">
             <img th:src="@{/zoom-logo.png}" alt="" width="180"
                  height="50" class="d-inline-block align-text-top">
         </a>
@@ -24,7 +24,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-versions">
                 <li><a class="dropdown-item" href="/my-booking">My Booking</a></li>
-                <li><a class="dropdown-item" href="logout">Logout</a></li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -38,8 +38,6 @@
             Ref Number: <span class="fw-bold">CAR-00045-2022</span><br>
             Check your email for details.
         </p>
-<!--        <a th:href="@{/view-ticket/{id}(id=${bookingId})}">View Ticket</a>-->
-<!--        <a href="/movie/index">Home</a>-->
     </div>
 </div>
 <div class="row  fixed-bottom m-0 mt-5 bg-dark text-light">

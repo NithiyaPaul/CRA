@@ -23,7 +23,7 @@
                     <a class="nav-link active" aria-current="page"></a>
                 </li>
                 <li class="nav-item m-2">
-                    <a class="nav-link" href="/my-enquires"><h6>Enquiry</h6></a>
+                    <a class="nav-link" href="/my-enquires"><h6>Bookings</h6></a>
                 </li>
                 <li class="nav-item m-2">
                     <a class="nav-link" href="/profile"><h6>Profile</h6></a>
@@ -63,7 +63,7 @@
                     </button>
                 </h2>
                 <div th:id="'myCar' + ${carList.getId}" class="accordion-collapse collapse"
-                     aria-labelledby="panelsStayOpen-headingTwo">
+                     aria-labelledby="panelsStayOpen-headingTwo" >
                     <div class="accordion-body">
                         <div class="row">
                             <div class="col">
@@ -85,7 +85,7 @@
                             <div class="col">
                                 <td><a th:href="@{/car/edit-car/{id}(id=${carList.getId})}" class="btn btn-warning">Edit</a>
                                 </td>
-                                <td><a class="btn btn-danger">Delete</a></td>
+                                <td><a class="btn btn-danger" th:href="@{/car/delete-car/{id}(id=${carList.getId})}">Delete</a></td>
                             </div>
                         </div>
                     </div>
@@ -133,7 +133,15 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="location" class="form-label">Location</label>
-                                        <input type="text" class="form-control" id="location" name="location" required>
+                                        <select class="form-select" aria-label="Default select example" name="location" id="location">
+                                            <option value="Kochi" selected>Kochi</option>
+                                            <option value="Kollam">Kollam</option>
+                                            <option value="Kottayam">Kottayam</option>
+                                            <option value="Thrissur">Thrissur</option>
+                                            <option value="Idukki">Idukki</option>
+                                            <option value="Calicut">Calicut</option>
+                                            <option value="Palakkad">Palakkad</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

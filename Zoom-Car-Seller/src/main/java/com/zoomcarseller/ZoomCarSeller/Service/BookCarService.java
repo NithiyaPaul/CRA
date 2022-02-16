@@ -1,6 +1,8 @@
 package com.zoomcarseller.ZoomCarSeller.Service;
 
 import com.zoomcarseller.ZoomCarSeller.ValueObject.BookCar;
+import com.zoomcarseller.ZoomCarSeller.ValueObject.Customer;
+import com.zoomcarseller.ZoomCarSeller.ValueObject.ResponseTemplateVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -48,5 +50,15 @@ public class BookCarService {
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         return restTemplate.exchange("http://localhost:8080/get-booking/{id}", HttpMethod.GET,
                 entity, BookCar.class,id).getBody();
+    }
+
+    public ResponseTemplateVO saveStatus(BookCar bookCar, Long id) {
+        ResponseTemplateVO vo = new ResponseTemplateVO();
+        BookCar partner = restTemplate.postForObject(
+                "http://localhost:8080/save-status/{id}",
+                bookCar,
+                BookCar.class,id);
+        vo.setBookCar(partner);
+        return vo;
     }
 }

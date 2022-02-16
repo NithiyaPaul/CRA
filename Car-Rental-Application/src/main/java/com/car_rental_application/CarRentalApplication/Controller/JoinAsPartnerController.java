@@ -43,6 +43,6 @@ public class JoinAsPartnerController {
 
         User user = new User(req.getParameter("contactName"),req.getParameter("email"),req.getParameter("password"),"OWNER");
         authService.saveUser(user);
-        return homeController.index(model,req);
+        return "PartnerConfirmationPage";
     }
 }
